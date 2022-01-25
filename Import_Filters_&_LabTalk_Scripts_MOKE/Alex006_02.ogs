@@ -1,0 +1,114 @@
+//COMMENT: Col(B)[U]$=kOe; - change the units [U] of the column A Col(B)
+Col(B)[U]$=kOe;
+
+//COMMENT: Col(B)=Col(B)/1000 - divide column B by 1000
+Col(B)=Col(B)/1000;
+
+Col(B)=Col(B)*0.84;
+
+//COMMENT: normalize column Col(E), "irng" - Input Range, "orng" - Output Range
+rnormalize -r method:range irng:=col(H) orng:=<new>;
+//rnormalize -r method:range irng:=col(M) orng:=<new>;
+//COMMENT: Additional column is created after normalization
+
+Col(N)=(Col(N)-0.5)*2;
+
+//COMMENT: X-axis rotation for magnetic loop
+//col(N)=Col(N)*(-1);
+
+//COMMENT: Change "Long Name" of col(N), [L] - Long Name, [C] - Comments
+col(N)[L]$=Ellipticity;
+col(N)[C]$=Ellipticity;
+
+
+rnormalize -r method:range irng:=col(M) orng:=<new>;
+Col(O)=(Col(O)-0.5)*2;
+Col(O)[L]$=Rotation;
+Col(O)[C]$=Rotation;
+
+//COMMENT wks.addCol(); - create new column in Active Sheet
+//COMMENT: wks - WorKSheet
+// wks.addCol();
+// Col(G)=Col(F)-0.5;
+
+// col(G)[L]$=Magnetisation;
+// col(G)[L]$=Magnetisation;
+
+//COMMENT: A$=page.label$ - string variable A$ is set to be equal to Long Name. "page.label$" is used to access Long Name
+A$=page.label$;
+
+//COMMENT: %(1, @WT, 2, D1) - means the cell value at column 2, row D1 in the source worksheet of the 1st data plot
+string a1$=%(1, @WT, 2, D1);
+
+//COMMENT:
+string a2$=a1.left(4)$;
+
+//COMMENT: %(1, @WT, 2, D1) - means the cell value at column 2, row D2 in the source worksheet of the 1st data plot
+string b1$=%(1, @WT, 2, D2);
+
+string b2$=b1.left(4)$;
+
+//COMMENT: string c1$=a2$+"-"+b2$ +"-"+A$
+string c1$=a2$+"-"+b2$ +"-"+A$;
+
+
+//COMMENT: Set Active Window Long Name to c1$
+page.label$ = c1$ ;
+
+//COMMENT: plotxy iy:=(2,13) - create XY plot, column X is column nr 2, column Y is column nr 14
+//COMMENT: plot:=202 - 202 is plot ID (Graph Type: line+Symbol), help: https://www.originlab.com/doc/LabTalk/ref/Plot-Type-IDs
+plotxy iy:=((2,14),(2,15)) plot:=202;
+
+
+// page.label$=A$;
+
+//COMMENT: %(1Y,@WL) - @WL - Long Name of book (workbook, matrix)
+label -d 400 200 -s  %(1Y,@WL);
+label -d 400 400  -s "X=" %(a2$) mm;
+label -d 400 600 -s "Y=" %(b2$) mm;
+label -d 400 800 -s "Field corrected by x0.84";
+
+
+
+// COMMENT String variable B$ is set to be equal to Active Window Short Name 
+string B$ = page.name$;
+
+
+// COMMENT Change  Active Window Shor Name to %(1, @WT, 2, D2);
+// win -r %(1, @WT, 2, D2);
+
+
+
+// label -d 800 600 -s "Y="%(1, @WT, 2, D2) mm;
+
+string a1$=%(1, @WT, 2, D1);
+
+string a2$=a1.left(4)$;
+
+string b1$=%(1, @WT, 2, D2);
+
+string b2$=b1.left(4)$;
+
+string c1$=a2$+"-"+b2$ +"-"+A$;
+
+
+
+// Set Active Window Long Name to c1$
+page.label$ = c1$ ;
+
+
+page.title=3;
+
+
+win -r %(wn$) %(a3$);
+type %(a3$);
+page.label$ = %(a3$);
+
+
+
+
+
+
+//abel -d 400 800 -s  %(B$);
+
+type B$;
